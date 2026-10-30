@@ -204,7 +204,7 @@ def install():
     from pathlib import Path
 
     if sys.platform != "linux":
-        console.print("Nothing to do: on Windows just keep EL-FETCH.exe wherever you like and pin it to Start/Taskbar.")
+        console.print("On Windows use EL-FETCH-Setup.exe from the releases page – it adds the Start-menu entry and PATH.")
         return
     exe = Path(sys.executable if getattr(sys, "frozen", False) else shutil.which("elfetch") or sys.argv[0]).resolve()
     share = Path.home() / ".local/share"

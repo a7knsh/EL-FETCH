@@ -3,28 +3,27 @@
 Type a part, get every offer from the shops that deliver to **your country**, ranked by
 **item price + shipping**. One app for Linux and Windows: double-click it for the window, or use it from a terminal.
 
-## Download
+## Install
 
-Get the latest build from **[Releases](https://github.com/a7knsh/EL-FETCH/releases/latest)**. There is nothing to install.
+**Windows 10/11:** download **[EL-FETCH-Setup.exe](https://github.com/a7knsh/EL-FETCH/releases/latest/download/EL-FETCH-Setup.exe)**
+and run it. You don't need admin rights. It adds EL-FETCH to the Start menu and (optionally) the desktop, and puts
+`elfetch` on your PATH for cmd/PowerShell. Uninstall it from *Settings → Apps*. The exe is unsigned, so if SmartScreen warns you,
+click *More info → Run anyway*.
 
-| OS | File | Start |
-|---|---|---|
-| Windows 10/11 | `EL-FETCH-windows-x64.exe` | Double-click it. If SmartScreen warns you (the exe is unsigned), click *More info → Run anyway* |
-| Linux x86_64 | `EL-FETCH-linux-x86_64` | `chmod +x EL-FETCH-linux-x86_64 && ./EL-FETCH-linux-x86_64` |
+**Linux (x86_64, any distro):** paste this into a terminal:
 
-On Linux, run `./EL-FETCH-linux-x86_64 install` once. It adds EL-FETCH to your application menu and makes
-`elfetch` available as a terminal command (in `~/.local/bin`).
-
-Pick your country in the window (or with `elfetch setup`) and search. The same file is also the terminal version:
-`EL-FETCH search 1N4007` (on Windows: `EL-FETCH-windows-x64.exe search 1N4007` from cmd/PowerShell).
-
+```bash
+curl -fsSL https://raw.githubusercontent.com/a7knsh/EL-FETCH/main/install.sh | sh
 ```
-$ elfetch search "1N4007" -q 20
- # Shop        Item                                              Qty   Price   Ship   Total
- 1 AliExpress  100PCS 1N4007 DO-41 Rectifier Diode             1×100   €2,19   free   €2,19
- 2 Conrad      MCC Gleichrichterdiode 1N4007-TP                   20   €0,40 €5,95*   €6,35
- 3 Reichelt    1N 4007 – Gleichrichterdiode, 1000 V, 1 A, DO-41   20   €0,60 €6,95*   €7,55
-```
+
+It adds EL-FETCH to your application menu and makes `elfetch` a terminal command. Run the same line again to update.
+To uninstall, add `-s -- --uninstall` after `sh`.
+
+**Portable (no install):** [Releases](https://github.com/a7knsh/EL-FETCH/releases/latest) also has the bare
+`EL-FETCH-windows-x64.exe` and `EL-FETCH-linux-x86_64`. Download one and start it.
+
+Then pick your country in the window and search. The same program is also the terminal version:
+`elfetch search 1N4007`.
 
 ## Shops
 
@@ -44,7 +43,7 @@ access, even from a headless browser. Octopart lists RS/Distrelec offers, and Ge
 
 Supported regions: AT, DE, CH, IT, NL, FR, PL, GB (`elfetch/regions.py`).
 
-## Install from source (optional)
+## Install from source (developers)
 
 ```bash
 python3 -m venv .venv && . .venv/bin/activate      # Windows: .venv\Scripts\activate
@@ -107,7 +106,7 @@ AT = { cost = 7.50, free_over = 150 }
 ## Building the standalone app
 
 Pushing a tag such as `v0.2.0` makes GitHub Actions (`.github/workflows/release.yml`) build the Linux and Windows
-executables, run the tests, and attach the executables to a release. To build locally:
+executables and the Windows installer, run the tests, and attach everything to a release. To build locally:
 
 ```bash
 pip install -e '.[gui,dev]'

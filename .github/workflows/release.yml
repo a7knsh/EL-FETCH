@@ -34,13 +34,24 @@ jobs:
       - run: python scripts/build.py
       - name: Smoke test
         run: ${{ matrix.file }} --help
+      - name: Windows installer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install innosetup -y --no-progress
+          $v = python -c "import elfetch; print(elfetch.__version__)"
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DAppVersion=$v" packaging\windows\elfetch.iss
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
       - name: Rename
         shell: bash
         run: mv "${{ matrix.file }}" "dist/${{ matrix.asset }}"
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.asset }}
-          path: dist/${{ matrix.asset }}
+          path: |
+            dist/${{ matrix.asset }}
+            dist/EL-FETCH-Setup.exe
+          if-no-files-found: ignore
 
   release:
     needs: build
