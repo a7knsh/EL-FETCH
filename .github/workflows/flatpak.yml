@@ -14,13 +14,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install flatpak + Flathub builder
         run: |
-          sudo apt-get update && sudo apt-get install -y flatpak
+          sudo apt-get update && sudo apt-get install -y flatpak dbus
           flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-          flatpak install --user -y --noninteractive flathub org.flatpak.Builder
+          flatpak install --user -y --noninteractive flathub org.flatpak.Builder \
+            org.kde.Platform//6.11 org.kde.Sdk//6.11 io.qt.PySide.BaseApp//6.11
       - name: Build
         run: |
           set -o pipefail
-          flatpak run org.flatpak.Builder --user --install-deps-from=flathub --force-clean --disable-rofiles-fuse \
+          dbus-run-session -- flatpak run org.flatpak.Builder --user --force-clean --disable-rofiles-fuse \
             --repo=repo flatpak-build packaging/flatpak/io.github.a7knsh.EL_FETCH.yml 2>&1 | tee build.log || {
             # job logs need a GitHub login; annotations don't, so the failure is readable from the public API
             echo "::error title=flatpak-builder::$(tail -n 40 build.log | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
