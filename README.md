@@ -24,6 +24,10 @@ make it executable (right-click → *Properties → Allow executing*, or `chmod 
 To add it to your application menu and get the `elfetch` command, run it once with `install`:
 `./EL-FETCH-x86_64.AppImage install`. If your system has no FUSE, start it with `--appimage-extract-and-run`.
 
+**Flatpak:** download **[EL-FETCH.flatpak](https://github.com/a7knsh/EL-FETCH/releases/latest/download/EL-FETCH.flatpak)**
+and open it with your software center, or run `flatpak install EL-FETCH.flatpak`. Start it from the application menu, or in a
+terminal with `flatpak run io.github.a7knsh.EL_FETCH`. To update, download the new file and install it again.
+
 **Portable (no install):** [Releases](https://github.com/a7knsh/EL-FETCH/releases/latest) also has the bare
 `EL-FETCH-windows-x64.exe` and `EL-FETCH-linux-x86_64`. Download one and start it.
 

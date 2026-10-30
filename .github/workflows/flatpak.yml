@@ -3,9 +3,9 @@ name: Flatpak
 on:
   push:
     branches: [main]
-    tags: ["v*"]
     paths: ["packaging/flatpak/**", "elfetch/**", "pyproject.toml", ".github/workflows/flatpak.yml"]
   workflow_dispatch:
+  workflow_call:          # release.yml runs this on tags and attaches EL-FETCH.flatpak to the release
 
 jobs:
   flatpak:

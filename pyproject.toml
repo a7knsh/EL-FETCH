@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "elfetch"
-version = "0.3.1"
+version = "0.3.2"
 description = "Find the cheapest offer (price + shipping to your country) for electronic parts across many shops."
 readme = "README.md"
 requires-python = ">=3.11"
