@@ -35,8 +35,10 @@ jobs:
           flatpak run io.github.a7knsh.EL_FETCH --help
       - name: Flathub lint
         run: |
-          flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest packaging/flatpak/io.github.a7knsh.EL_FETCH.yml || true
-          flatpak run --command=flatpak-builder-lint org.flatpak.Builder repo repo || true
+          for what in "manifest packaging/flatpak/io.github.a7knsh.EL_FETCH.yml" "repo repo"; do
+            out=$(flatpak run --command=flatpak-builder-lint org.flatpak.Builder $what 2>&1) ||
+              echo "::warning title=lint ${what%% *}::$(echo "$out" | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: EL-FETCH.flatpak
