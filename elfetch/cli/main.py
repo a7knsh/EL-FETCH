@@ -206,7 +206,11 @@ def install():
     if sys.platform != "linux":
         console.print("On Windows use EL-FETCH-Setup.exe from the releases page – it adds the Start-menu entry and PATH.")
         return
-    exe = Path(sys.executable if getattr(sys, "frozen", False) else shutil.which("elfetch") or sys.argv[0]).resolve()
+    import os
+    if os.environ.get("APPIMAGE"):    # running from an AppImage: point at the .AppImage, not its temporary mount
+        exe = Path(os.environ["APPIMAGE"]).resolve()
+    else:
+        exe = Path(sys.executable if getattr(sys, "frozen", False) else shutil.which("elfetch") or sys.argv[0]).resolve()
     share = Path.home() / ".local/share"
     icon = share / "icons/hicolor/256x256/apps/elfetch.png"
     icon.parent.mkdir(parents=True, exist_ok=True)

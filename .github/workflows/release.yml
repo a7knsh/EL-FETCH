@@ -34,6 +34,13 @@ jobs:
       - run: python scripts/build.py
       - name: Smoke test
         run: ${{ matrix.file }} --help
+      - name: AppImage
+        if: runner.os == 'Linux'
+        run: |
+          curl -fsSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool
+          APPIMAGETOOL=$PWD/appimagetool python scripts/build.py --appimage
+          APPIMAGE_EXTRACT_AND_RUN=1 dist/EL-FETCH-x86_64.AppImage --help
       - name: Windows installer
         if: runner.os == 'Windows'
         shell: pwsh
@@ -51,6 +58,7 @@ jobs:
           path: |
             dist/${{ matrix.asset }}
             dist/EL-FETCH-Setup.exe
+            dist/EL-FETCH-x86_64.AppImage
           if-no-files-found: ignore
 
   release:

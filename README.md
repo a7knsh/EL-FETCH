@@ -19,6 +19,11 @@ curl -fsSL https://raw.githubusercontent.com/a7knsh/EL-FETCH/main/install.sh | s
 It adds EL-FETCH to your application menu and makes `elfetch` a terminal command. Run the same line again to update.
 To uninstall, add `-s -- --uninstall` after `sh`.
 
+**Linux AppImage:** download **[EL-FETCH-x86_64.AppImage](https://github.com/a7knsh/EL-FETCH/releases/latest/download/EL-FETCH-x86_64.AppImage)**,
+make it executable (right-click → *Properties → Allow executing*, or `chmod +x EL-FETCH-x86_64.AppImage`) and double-click it.
+To add it to your application menu and get the `elfetch` command, run it once with `install`:
+`./EL-FETCH-x86_64.AppImage install`. If your system has no FUSE, start it with `--appimage-extract-and-run`.
+
 **Portable (no install):** [Releases](https://github.com/a7knsh/EL-FETCH/releases/latest) also has the bare
 `EL-FETCH-windows-x64.exe` and `EL-FETCH-linux-x86_64`. Download one and start it.
 
