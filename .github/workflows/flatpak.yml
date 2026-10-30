@@ -19,8 +19,13 @@ jobs:
           flatpak install --user -y --noninteractive flathub org.flatpak.Builder
       - name: Build
         run: |
+          set -o pipefail
           flatpak run org.flatpak.Builder --user --install-deps-from=flathub --force-clean --disable-rofiles-fuse \
-            --repo=repo flatpak-build packaging/flatpak/io.github.a7knsh.EL_FETCH.yml
+            --repo=repo flatpak-build packaging/flatpak/io.github.a7knsh.EL_FETCH.yml 2>&1 | tee build.log || {
+            # job logs need a GitHub login; annotations don't, so the failure is readable from the public API
+            echo "::error title=flatpak-builder::$(tail -n 40 build.log | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
+            exit 1
+          }
           flatpak build-bundle repo EL-FETCH.flatpak io.github.a7knsh.EL_FETCH \
             --runtime-repo=https://dl.flathub.org/repo/flathub.flatpakrepo
       - name: Smoke test
