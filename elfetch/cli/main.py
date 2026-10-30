@@ -188,5 +188,46 @@ def show_config():
         console.print(f"  {k} = {v[:3]}…{v[-2:]}" if len(v) > 6 else f"  {k} = ***")
 
 
+@app.command()
+def gui():
+    """Open the desktop window (same as starting EL-FETCH without arguments)."""
+    from ..__main__ import run_gui
+    run_gui()
+
+
+@app.command()
+def install():
+    """Linux: add EL-FETCH to your application menu (and to PATH as `elfetch`)."""
+    import shutil
+    import sys
+    from importlib.resources import files
+    from pathlib import Path
+
+    if sys.platform != "linux":
+        console.print("Nothing to do: on Windows just keep EL-FETCH.exe wherever you like and pin it to Start/Taskbar.")
+        return
+    exe = Path(sys.executable if getattr(sys, "frozen", False) else shutil.which("elfetch") or sys.argv[0]).resolve()
+    share = Path.home() / ".local/share"
+    icon = share / "icons/hicolor/256x256/apps/elfetch.png"
+    icon.parent.mkdir(parents=True, exist_ok=True)
+    icon.write_bytes(files("elfetch").joinpath("data/icon.png").read_bytes())
+    desktop = share / "applications/elfetch.desktop"
+    desktop.parent.mkdir(parents=True, exist_ok=True)
+    desktop.write_text(
+        "[Desktop Entry]\nType=Application\nName=EL-FETCH\n"
+        "Comment=Find the cheapest electronics parts incl. shipping\n"
+        f"Exec=\"{exe}\"\nIcon=elfetch\nTerminal=false\nCategories=Utility;Electronics;\n",
+        encoding="utf-8",
+    )
+    console.print(f"[green]Added to the application menu[/] ({desktop})")
+    link = Path.home() / ".local/bin/elfetch"
+    if getattr(sys, "frozen", False) and exe != link:
+        link.parent.mkdir(parents=True, exist_ok=True)
+        if link.is_symlink() or link.exists():
+            link.unlink()
+        link.symlink_to(exe)
+        console.print(f"[green]Terminal command[/] `elfetch` → {exe}")
+
+
 if __name__ == "__main__":
     app()

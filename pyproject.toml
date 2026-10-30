@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "elfetch"
-version = "0.1.0"
+version = "0.2.0"
 description = "Find the cheapest offer (price + shipping to your country) for electronic parts across many shops."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -23,16 +23,13 @@ browser = ["playwright>=1.45"]
 dev = ["pytest>=8", "pyinstaller>=6"]
 
 [project.scripts]
-elfetch = "elfetch.cli.main:app"
-
-[project.gui-scripts]
-elfetch-gui = "elfetch.gui.app:main"
+elfetch = "elfetch.__main__:main"
 
 [tool.setuptools.packages.find]
 include = ["elfetch*"]
 
 [tool.setuptools.package-data]
-elfetch = ["data/*.toml"]
+elfetch = ["data/*.toml", "data/*.png"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

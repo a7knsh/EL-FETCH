@@ -1,8 +1,22 @@
 # EL-FETCH ⚡ electronics part price fetcher
 
 Type a part, get every offer from the shops that deliver to **your country**, ranked by
-**item price + shipping**. There is a terminal version (`elfetch`) and a desktop GUI (`elfetch-gui`),
-both for Linux and Windows.
+**item price + shipping**. One app for Linux and Windows: double-click it for the window, or use it from a terminal.
+
+## Download
+
+Get the latest build from **[Releases](https://github.com/a7knsh/EL-FETCH/releases/latest)**. There is nothing to install.
+
+| OS | File | Start |
+|---|---|---|
+| Windows 10/11 | `EL-FETCH-windows-x64.exe` | Double-click it. If SmartScreen warns you (the exe is unsigned), click *More info → Run anyway* |
+| Linux x86_64 | `EL-FETCH-linux-x86_64` | `chmod +x EL-FETCH-linux-x86_64 && ./EL-FETCH-linux-x86_64` |
+
+On Linux, run `./EL-FETCH-linux-x86_64 install` once. It adds EL-FETCH to your application menu and makes
+`elfetch` available as a terminal command (in `~/.local/bin`).
+
+Pick your country in the window (or with `elfetch setup`) and search. The same file is also the terminal version:
+`EL-FETCH search 1N4007` (on Windows: `EL-FETCH-windows-x64.exe search 1N4007` from cmd/PowerShell).
 
 ```
 $ elfetch search "1N4007" -q 20
@@ -30,12 +44,11 @@ access, even from a headless browser. Octopart lists RS/Distrelec offers, and Ge
 
 Supported regions: AT, DE, CH, IT, NL, FR, PL, GB (`elfetch/regions.py`).
 
-## Install
+## Install from source (optional)
 
 ```bash
 python3 -m venv .venv && . .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -e .            # terminal version
-pip install -e '.[gui]'     # + desktop GUI (PySide6)
+pip install -e '.[gui]'     # `elfetch` = window, `elfetch search …` = terminal (leave out [gui] for terminal only)
 pip install -e '.[browser]' && playwright install chromium   # optional: Conrad + captcha fallback
 elfetch setup               # pick your country, optional API keys
 ```
@@ -63,7 +76,7 @@ How to read the table:
 
 ## Use (GUI)
 
-Run `elfetch-gui`. Enter a part, a quantity and a country, then press Enter. Results stream in as each shop
+Start EL-FETCH without arguments (or `elfetch gui`). Enter a part, a quantity and a country, then press Enter. Results stream in as each shop
 answers. Click a column header to sort, double-click a row to open the shop page, and press Ctrl+C to copy the link.
 **Settings…** holds your country, currency, the enabled shops and API keys. The GUI and CLI share the same config file.
 
@@ -91,15 +104,18 @@ the same layout at `~/.config/elfetch/shipping.toml`:
 AT = { cost = 7.50, free_over = 150 }
 ```
 
-## Standalone executables
+## Building the standalone app
+
+Pushing a tag such as `v0.2.0` makes GitHub Actions (`.github/workflows/release.yml`) build the Linux and Windows
+executables, run the tests, and attach the executables to a release. To build locally:
 
 ```bash
 pip install -e '.[gui,dev]'
-python scripts/build.py          # -> dist/elfetch, dist/elfetch-gui
+python scripts/build.py          # -> dist/EL-FETCH  (dist/EL-FETCH.exe on Windows)
 ```
 
-Run the build **on Windows** to get `elfetch.exe` / `elfetch-gui.exe`, since PyInstaller cannot cross-compile.
-The standalone builds leave out the headless-browser mode; use a pip install if you want Conrad.
+PyInstaller cannot cross-compile, so a Windows exe has to be built on Windows.
+The standalone build leaves out the headless-browser mode; use a pip install if you want Conrad.
 
 ## Development
 

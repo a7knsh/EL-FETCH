@@ -5,7 +5,7 @@ import asyncio
 import sys
 
 from PySide6.QtCore import QAbstractTableModel, QModelIndex, QSortFilterProxyModel, Qt, QThread, QUrl, Signal
-from PySide6.QtGui import QAction, QColor, QDesktopServices, QFont, QKeySequence
+from PySide6.QtGui import QAction, QColor, QDesktopServices, QFont, QIcon, QKeySequence, QPixmap
 from PySide6.QtWidgets import (
     QApplication, QCheckBox, QComboBox, QDialog, QDialogButtonBox, QDoubleSpinBox, QFormLayout, QGroupBox,
     QHBoxLayout, QHeaderView, QLabel, QLineEdit, QMainWindow, QMenu, QMessageBox, QPushButton, QSpinBox,
@@ -404,7 +404,12 @@ class _FilterProxy(QSortFilterProxyModel):
 def main():
     app = QApplication(sys.argv)
     app.setApplicationName("EL-FETCH")
+    app.setDesktopFileName("elfetch")
     app.setStyle("Fusion")
+    from importlib.resources import files
+    pm = QPixmap()
+    pm.loadFromData(files("elfetch").joinpath("data/icon.png").read_bytes())
+    app.setWindowIcon(QIcon(pm))
     w = MainWindow()
     w.show()
     sys.exit(app.exec())
