@@ -1,0 +1,50 @@
+# Shipping cost rules used when a shop doesn't tell us the shipping cost live.
+# Values are standard parcel rates in the given currency for one small order.
+# They are ESTIMATES (shown with * in the results) – check them now and then.
+# Override or add shops in ~/.config/elfetch/shipping.toml with the same layout.
+#
+# [shop.<COUNTRY>]  cost = base shipping, free_over = order value from which shipping is free
+# "*" is the fallback for any country not listed.
+
+[reichelt]
+AT = { cost = 6.95 }
+DE = { cost = 5.95 }
+"*" = { cost = 14.95 }
+
+[berrybase]
+AT = { cost = 5.95, free_over = 75 }
+DE = { cost = 4.95, free_over = 75 }
+CH = { cost = 9.95, currency = "CHF" }
+"*" = { cost = 14.95 }
+
+[pollin]
+AT = { cost = 6.99 }
+DE = { cost = 4.99 }
+"*" = { cost = 14.95 }
+
+[conrad]
+AT = { cost = 5.95, free_over = 49 }
+DE = { cost = 4.95, free_over = 49 }
+CH = { cost = 9.95, currency = "CHF", free_over = 100 }
+"*" = { cost = 9.95 }
+
+[amazon]
+AT = { cost = 4.99, free_over = 39 }
+DE = { cost = 3.99, free_over = 39 }
+"*" = { cost = 7.99 }
+
+[aliexpress]
+# AliExpress shows shipping per item; when it doesn't, assume a typical cheap rate.
+"*" = { cost = 2.99, free_over = 10 }
+
+[mouser]
+"*" = { cost = 20.00, free_over = 50 }
+
+[digikey]
+"*" = { cost = 18.00, free_over = 50 }
+
+[farnell]
+"*" = { cost = 9.95, free_over = 75 }
+
+[ebay]
+"*" = { cost = 4.99 }
