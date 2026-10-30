@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=EL-FETCH
+Comment=Find the cheapest electronics parts incl. shipping
+Exec=elfetch
+Icon=io.github.a7knsh.EL_FETCH
+Terminal=false
+Categories=Utility;
+Keywords=electronics;parts;price;compare;shop;components;

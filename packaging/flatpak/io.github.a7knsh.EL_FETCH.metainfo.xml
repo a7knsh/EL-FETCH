@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.a7knsh.EL_FETCH</id>
+  <name>EL-FETCH</name>
+  <summary>Find the cheapest electronic parts including shipping</summary>
+  <developer id="io.github.a7knsh">
+    <name>a7knsh</name>
+  </developer>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <description>
+    <p>
+      Type a part and EL-FETCH asks many electronics shops at once, then ranks every offer by item price plus
+      shipping to your country.
+    </p>
+    <ul>
+      <li>Geizhals, Reichelt, Berrybase, Pollin, Amazon and AliExpress without any setup</li>
+      <li>Mouser, DigiKey, Farnell, eBay and Octopart with a free API key</li>
+      <li>Live shipping costs where the shop provides them, estimates otherwise</li>
+      <li>Quantity price breaks and multi-packs are taken into account</li>
+      <li>Results stream in as each shop answers; double-click an offer to open it</li>
+    </ul>
+    <p>
+      Supported countries: Austria, Germany, Switzerland, Italy, the Netherlands, France, Poland and the
+      United Kingdom. The same app works from a terminal: flatpak run io.github.a7knsh.EL_FETCH search 1N4007
+    </p>
+  </description>
+  <launchable type="desktop-id">io.github.a7knsh.EL_FETCH.desktop</launchable>
+  <provides>
+    <binary>elfetch</binary>
+  </provides>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/a7knsh/EL-FETCH/v0.3.1/packaging/flatpak/screenshots/main.png</image>
+      <caption>Offers for a Raspberry Pi 5, sorted by total price</caption>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">https://github.com/a7knsh/EL-FETCH</url>
+  <url type="bugtracker">https://github.com/a7knsh/EL-FETCH/issues</url>
+  <url type="vcs-browser">https://github.com/a7knsh/EL-FETCH</url>
+  <categories>
+    <category>Utility</category>
+  </categories>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+  <requires>
+    <display_length compare="ge">768</display_length>
+  </requires>
+  <branding>
+    <color type="primary" scheme_preference="light">#f6d365</color>
+    <color type="primary" scheme_preference="dark">#5c4813</color>
+  </branding>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.3.1" date="2026-10-30">
+      <description>
+        <p>First Flatpak release.</p>
+      </description>
+    </release>
+    <release version="0.3.0" date="2026-10-30">
+      <description>
+        <p>Linux AppImage.</p>
+      </description>
+    </release>
+  </releases>
+</component>

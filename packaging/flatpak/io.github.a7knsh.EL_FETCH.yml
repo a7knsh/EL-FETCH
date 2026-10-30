@@ -1,0 +1,31 @@
+id: io.github.a7knsh.EL_FETCH
+runtime: org.kde.Platform
+runtime-version: '6.11'
+sdk: org.kde.Sdk
+base: io.qt.PySide.BaseApp
+base-version: '6.11'
+command: elfetch
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
+modules:
+  - python-deps.json
+
+  - name: elfetch
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-index --find-links=. --prefix=${FLATPAK_DEST} --no-deps .
+      - install -Dm644 packaging/flatpak/${FLATPAK_ID}.desktop -t ${FLATPAK_DEST}/share/applications
+      - install -Dm644 packaging/flatpak/${FLATPAK_ID}.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
+      - install -Dm644 elfetch/data/icon.png ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/${FLATPAK_ID}.png
+    sources:
+      # Flathub's copy of this manifest replaces this with a git source pinned to a release tag + commit
+      - type: dir
+        path: ../..
+        skip: [.git, .venv, build, dist, .flatpak-builder, flatpak-build, repo]
+      - setuptools.json

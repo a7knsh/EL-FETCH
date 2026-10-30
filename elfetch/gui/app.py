@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import sys
 
 from PySide6.QtCore import QAbstractTableModel, QModelIndex, QSortFilterProxyModel, Qt, QThread, QUrl, Signal
@@ -404,7 +405,7 @@ class _FilterProxy(QSortFilterProxyModel):
 def main():
     app = QApplication(sys.argv)
     app.setApplicationName("EL-FETCH")
-    app.setDesktopFileName("elfetch")
+    app.setDesktopFileName(os.environ.get("FLATPAK_ID", "elfetch"))   # must match the .desktop name for the taskbar icon
     app.setStyle("Fusion")
     from importlib.resources import files
     pm = QPixmap()

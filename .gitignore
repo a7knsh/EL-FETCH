@@ -7,3 +7,7 @@ dist/
 .devcfg/
 .devcache/
 .pytest_cache/
+flatpak-build/
+.flatpak-builder/
+repo/
+*.flatpak
